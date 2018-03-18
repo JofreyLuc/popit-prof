@@ -36,6 +36,11 @@ public class Surveys {
             names.add(s.getName());
         }
 
+        //TODO : temp ?
+        for (int i = names.size()-1; i < 12; i++) {
+            names.add("-1");
+        }
+
         return names;
     }
 }

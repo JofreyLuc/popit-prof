@@ -49,16 +49,21 @@ public class SurveyListingFragment extends Fragment {
         GridLayout grid = (GridLayout)rootView.findViewById(R.id.grid);
 
         for (final String s : surveys) {
-            if (s.equals("-1")) break;
-            Button b = new Button(getContext());
-            b.setText(s);
-            b.setOnClickListener(new Button.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    dashboardLauncher.launchDashboard(s);
-                }
-            });
-            grid.addView(b);
+            if (s.equals("-1")) {
+                TextView v = new TextView(getContext());
+                v.setText("•");
+                grid.addView(v);
+            } else {
+                Button b = new Button(getContext());
+                b.setText(s);
+                b.setOnClickListener(new Button.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        dashboardLauncher.launchDashboard(s);
+                    }
+                });
+                grid.addView(b);
+            }
         }
 
         return rootView;
