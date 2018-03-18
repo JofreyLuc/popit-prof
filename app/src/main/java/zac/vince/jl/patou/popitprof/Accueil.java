@@ -8,25 +8,21 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import zac.vince.jl.patou.popitprof.CompatInterfaces.DashboardLauncher;
-import zac.vince.jl.patou.popitprof.model.Survey;
 import zac.vince.jl.patou.popitprof.persistence.DataStorage;
 
 public class Accueil extends AppCompatActivity implements DashboardLauncher {
 
-    DemoCollectionPagerAdapter mDemoCollectionPagerAdapter;
+    SurveysListPagerAdapter mSurveysListPagerAdapter;
     ViewPager mViewPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_accueil);
-        mDemoCollectionPagerAdapter = new DemoCollectionPagerAdapter(getSupportFragmentManager(), DataStorage.getInstance().getSurveys().getSurveysName());
+        mSurveysListPagerAdapter = new SurveysListPagerAdapter(getSupportFragmentManager(), DataStorage.getInstance().getSurveys().getSurveysName());
         mViewPager = (ViewPager) findViewById(R.id.pager);
-        mViewPager.setAdapter(mDemoCollectionPagerAdapter);
+        mViewPager.setAdapter(mSurveysListPagerAdapter);
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabDots);
         tabLayout.setupWithViewPager(mViewPager, true);
     }

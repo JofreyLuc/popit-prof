@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.graphics.PointF;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
@@ -51,7 +50,7 @@ public class DashboardActivity extends AppCompatActivity {
 
     private void deleteSurvey(){
         DataStorage.getInstance().removeSurvey(surveyName);
-        Toast.makeText(this, "Qeustionnaire " + surveyName + "\"supprimé\"", Toast.LENGTH_LONG).show();
+        Toast.makeText(this, "Questionnaire " + surveyName + " \"supprimé\"", Toast.LENGTH_LONG).show();
         finish();
     }
 
@@ -98,6 +97,6 @@ public class DashboardActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        overridePendingTransition(R.anim.stay, R.anim.slide_out_up);
+        overridePendingTransition(R.anim.stay, R.anim.slide_out_down);
     }
 }

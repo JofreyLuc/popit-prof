@@ -13,11 +13,11 @@ import java.util.List;
  * Created by patrick on 3/16/18.
  */
 
-public class DemoCollectionPagerAdapter extends FragmentStatePagerAdapter {
+public class SurveysListPagerAdapter extends FragmentStatePagerAdapter {
 
     private ArrayList<String> surveys;
 
-    public DemoCollectionPagerAdapter(FragmentManager fm, ArrayList<String> surveys) {
+    public SurveysListPagerAdapter(FragmentManager fm, ArrayList<String> surveys) {
         super(fm);
         this.surveys = surveys;
     }
@@ -54,6 +54,6 @@ public class DemoCollectionPagerAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public CharSequence getPageTitle(int position) {
-        return "OBJECT " + (position + 1);
+        return "";
     }
 }

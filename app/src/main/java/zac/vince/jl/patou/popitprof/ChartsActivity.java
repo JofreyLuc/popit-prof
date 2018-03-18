@@ -52,6 +52,6 @@ public class ChartsActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        overridePendingTransition(R.anim.stay, R.anim.slide_out_up);
+        overridePendingTransition(R.anim.stay, R.anim.slide_out_down);
     }
 }
