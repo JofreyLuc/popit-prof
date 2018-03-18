@@ -6,11 +6,18 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MotionEvent;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import zac.vince.jl.patou.popitprof.persistence.DataStorage;
 
 public class DashboardActivity extends AppCompatActivity {
 
     public static String EXTRA_SURVEYNAME;
+
+    private String surveyName;
 
     private int nbTouches = 0;
     private PointF start = new PointF();
@@ -20,8 +27,39 @@ public class DashboardActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
 
+        surveyName = getIntent().getStringExtra(EXTRA_SURVEYNAME);
+
         TextView t = (TextView) findViewById(R.id.text_surveyName);
-        t.setText(getIntent().getStringExtra(EXTRA_SURVEYNAME));
+        t.setText("Questionnaire " + surveyName);
+
+        Button delete = (Button) findViewById(R.id.button_delete);
+        delete.setOnClickListener(new Button.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                deleteSurvey();
+            }
+        });
+
+        Button charts = (Button) findViewById(R.id.button_graphs);
+        charts.setOnClickListener(new Button.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                launchCharts();
+            }
+        });
+    }
+
+    private void deleteSurvey(){
+        DataStorage.getInstance().removeSurvey(surveyName);
+        Toast.makeText(this, "Qeustionnaire " + surveyName + "\"supprimé\"", Toast.LENGTH_LONG).show();
+        finish();
+    }
+
+    private void launchCharts(){
+        Intent i = new Intent(this, ChartsActivity.class);
+        i.putExtra(EXTRA_SURVEYNAME, surveyName);
+        startActivity(i);
+        overridePendingTransition(R.anim.slide_in_up, R.anim.stay);
     }
 
     //TODO : duplication de code

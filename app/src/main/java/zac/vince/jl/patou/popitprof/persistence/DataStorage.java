@@ -1,5 +1,7 @@
 package zac.vince.jl.patou.popitprof.persistence;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 
 import zac.vince.jl.patou.popitprof.model.Question;
@@ -39,5 +41,9 @@ public class DataStorage {
 
     public Surveys getSurveys() {
         return surveys;
+    }
+
+    public void removeSurvey(String surveyName){
+        Log.i("DS", "Survey " + surveyName + " removed");
     }
 }
