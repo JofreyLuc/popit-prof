@@ -20,7 +20,7 @@ public class DashboardActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
 
-        TextView t = (TextView) findViewById(R.id.text1);
+        TextView t = (TextView) findViewById(R.id.text_surveyName);
         t.setText(getIntent().getStringExtra(EXTRA_SURVEYNAME));
     }
 
@@ -39,7 +39,7 @@ public class DashboardActivity extends AppCompatActivity {
                 break;
 
             case MotionEvent.ACTION_MOVE :
-                if (nbTouches == 3 && (Math.abs(start.y - event.getY()) > 150)) {
+                if (nbTouches >= 3 && (Math.abs(start.y - event.getY()) > 150)) {
                     finish();
                 }
                 break;

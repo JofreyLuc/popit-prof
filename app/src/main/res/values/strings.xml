@@ -1,4 +1,6 @@
 <resources>
     <string name="app_name">PopItProf</string>
     <string name="action_settings">Settings</string>
+    <string name="delete">Supprimer</string>
+    <string name="graphs">Graphiques</string>
 </resources>
