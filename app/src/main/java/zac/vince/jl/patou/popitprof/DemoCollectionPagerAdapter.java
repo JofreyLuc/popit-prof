@@ -22,9 +22,20 @@ public class DemoCollectionPagerAdapter extends FragmentStatePagerAdapter {
         this.surveys = surveys;
     }
 
+    private ArrayList<String> getSixSurveys(int fragIndex) {
+        ArrayList<String> result = new ArrayList<>();
+        if (fragIndex*6 < this.surveys.size()) {
+            for (int i = fragIndex * 6; i < this.surveys.size() && i < fragIndex * 6 + 6; i++) {
+                result.add(this.surveys.get(i));
+            }
+        }
+        return result;
+    }
+
     @Override
     public Fragment getItem(int i) {
-        ArrayList<String> fragmentSurveys = new ArrayList<>(this.surveys.subList(i*6, i*6+6));
+
+        ArrayList<String> fragmentSurveys = getSixSurveys(i);
 
         Fragment fragment = new SurveyListingFragment();
 
@@ -37,7 +48,7 @@ public class DemoCollectionPagerAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public int getCount() {
-        //TODO
+        //TODO : global
         return 2;
     }
 

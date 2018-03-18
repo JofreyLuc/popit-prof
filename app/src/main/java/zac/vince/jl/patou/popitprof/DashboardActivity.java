@@ -24,6 +24,7 @@ public class DashboardActivity extends AppCompatActivity {
         t.setText(getIntent().getStringExtra(EXTRA_SURVEYNAME));
     }
 
+    //TODO : duplication de code
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         switch (event.getAction() & MotionEvent.ACTION_MASK) {
@@ -38,7 +39,7 @@ public class DashboardActivity extends AppCompatActivity {
                 break;
 
             case MotionEvent.ACTION_MOVE :
-                if (nbTouches == 3 && (start.y - event.getY() < 250)) {
+                if (nbTouches == 3 && (Math.abs(start.y - event.getY()) > 150)) {
                     finish();
                 }
                 break;
@@ -56,4 +57,9 @@ public class DashboardActivity extends AppCompatActivity {
     }
 
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        overridePendingTransition(R.anim.stay, R.anim.slide_out_up);
+    }
 }
