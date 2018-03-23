@@ -1,20 +1,22 @@
 package zac.vince.jl.patou.popitprof;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.widget.ImageView;
 
-import zac.vince.jl.patou.popitprof.CompatInterfaces.DashboardLauncher;
+import zac.vince.jl.patou.popitprof.compatInterfaces.DashboardLauncher;
 import zac.vince.jl.patou.popitprof.persistence.DataStorage;
 
 public class Accueil extends AppCompatActivity implements DashboardLauncher {
 
-    SurveysListPagerAdapter mSurveysListPagerAdapter;
-    ViewPager mViewPager;
+    private SurveysListPagerAdapter mSurveysListPagerAdapter;
+    private ViewPager mViewPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,5 +35,11 @@ public class Accueil extends AppCompatActivity implements DashboardLauncher {
         i.putExtra(DashboardActivity.EXTRA_SURVEYNAME, surveyName);
         startActivity(i);
         overridePendingTransition(R.anim.slide_in_up, R.anim.stay);
+    }
+
+    @Override
+    public void popCircularMenu(String surveyName) {
+        ImageView menu = new ImageView(getApplicationContext());
+        Bitmap image = BitmapFactory.decodeFile();
     }
 }

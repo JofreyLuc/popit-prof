@@ -1,7 +1,5 @@
 package zac.vince.jl.patou.popitprof;
 
-import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -15,7 +13,7 @@ import android.widget.Toast;
 
 import java.util.List;
 
-import zac.vince.jl.patou.popitprof.CompatInterfaces.DashboardLauncher;
+import zac.vince.jl.patou.popitprof.compatInterfaces.DashboardLauncher;
 
 /**
  * Created by patrick on 3/16/18.
@@ -60,6 +58,13 @@ public class SurveyListingFragment extends Fragment {
                     @Override
                     public void onClick(View view) {
                         dashboardLauncher.launchDashboard(s);
+                    }
+                });
+                b.setOnLongClickListener(new Button.OnLongClickListener() {
+                    @Override
+                    public boolean onLongClick(View view) {
+                        dashboardLauncher.popCircularMenu(s);
+                        return true;
                     }
                 });
                 grid.addView(b);
