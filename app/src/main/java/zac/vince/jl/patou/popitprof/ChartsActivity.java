@@ -10,16 +10,24 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
 public class ChartsActivity extends AppCompatActivity {
 
-    private PointF start = new PointF();
+    private PointF startFinish = new PointF();
+    private PointF startSort = new PointF();
+    private PointF startSwitch = new PointF();
+
     private Boolean sortHasBeenTriggered = false;
+    private Boolean swiping = false;
 
     private static final String TAG = "AZER";
     private static final int TOUCH_DISTANCE = 150;
 
     private Fragment barFragment = new BarFragment();
     private Fragment circularGaugeFragment = new CircularGaugeFragment();
+    private ArrayList<Fragment> fragments = new ArrayList<>();
+    private int currentFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +35,9 @@ public class ChartsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_charts);
 
         setCurrentFragment(barFragment);
+        currentFragment = 0;
+        fragments.add(barFragment);
+        fragments.add(circularGaugeFragment);
 
     }
 
@@ -34,32 +45,63 @@ public class ChartsActivity extends AppCompatActivity {
     public boolean onTouchEvent(MotionEvent event) {
 
         if (event.getPointerCount() > 1) { // multitouch event
+
             if (event.getPointerCount() >= 3) {
-                if ((start.y - event.getY()) < -TOUCH_DISTANCE)
+                if ((startFinish.y - event.getY()) < -TOUCH_DISTANCE)
                     finish();
             }
+
+            if (event.getPointerCount() == 2) {
+                if (event.getAction() == MotionEvent.ACTION_POINTER_2_DOWN) {
+                    startSort.set(event.getX(), event.getY());
+                    sortHasBeenTriggered = false;
+                } else if (event.getAction() == MotionEvent.ACTION_MOVE) {
+                    if (!sortHasBeenTriggered && (startSort.y - event.getY()) > TOUCH_DISTANCE) { // vers le haut
+                        Toast.makeText(this, "Change sens tri vers le haut", Toast.LENGTH_LONG).show();
+                        sortHasBeenTriggered = true;
+                    } else if (!sortHasBeenTriggered && (startSort.y - event.getY()) < -TOUCH_DISTANCE) { // vers le bas
+                        Toast.makeText(this, "Change sens tri vers le bas", Toast.LENGTH_LONG).show();
+                        sortHasBeenTriggered = true;
+                    }
+                } else if (event.getAction() == MotionEvent.ACTION_POINTER_UP) {
+                    Log.i(TAG, "UP");
+                }
+            }
+
         } else { // single touch event
+            startFinish.set(event.getX(), event.getY());
 
             if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                start.set(event.getX(), event.getY());
-                sortHasBeenTriggered = false;
-            }
-            else if (event.getAction() == MotionEvent.ACTION_MOVE){
-                if (!sortHasBeenTriggered && (start.y - event.getY()) > TOUCH_DISTANCE) { // vers le haut
-                    Toast.makeText(this, "Change sens tri vers le haut", Toast.LENGTH_LONG).show();
-                    sortHasBeenTriggered = true;
+                startSwitch.set(event.getX(), event.getY());
+                swiping = true;
+            } else if (event.getAction() == MotionEvent.ACTION_MOVE) {
+                if (swiping) {
+                    if ((startSwitch.x - event.getX()) > TOUCH_DISTANCE) {
+                        nextFragment();
+                        swiping = false;
+                    }
+                    if ((startSwitch.x - event.getX()) < -TOUCH_DISTANCE) {
+                        previousFragment();
+                        swiping = false;
+                    }
                 }
-                else if (!sortHasBeenTriggered && (start.y - event.getY()) < -TOUCH_DISTANCE) { // vers le bas
-                    Toast.makeText(this, "Change sens tri vers le bas", Toast.LENGTH_LONG).show();
-                    sortHasBeenTriggered = true;
-                }
-            }
-            else if (event.getAction() == MotionEvent.ACTION_UP){
-                Log.i(TAG, "UP");
             }
         }
 
         return true;
+    }
+
+    private void nextFragment() {
+        currentFragment++;
+        currentFragment %= fragments.size();
+        setCurrentFragment(fragments.get(currentFragment));
+    }
+
+    private void previousFragment(){
+        currentFragment--;
+        currentFragment %= fragments.size();
+        currentFragment = Math.abs(currentFragment);
+        setCurrentFragment(fragments.get(currentFragment));
     }
 
     private void setCurrentFragment(Fragment f){
