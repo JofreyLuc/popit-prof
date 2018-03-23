@@ -6,12 +6,17 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MotionEvent;
+import android.widget.Toast;
 
 public class ChartsActivity extends AppCompatActivity {
 
-    private int nbTouches = 0;
     private PointF start = new PointF();
+    private Boolean sortHasBeenTriggered = false;
+
+    private static final String TAG = "AZER";
+    private static final int TOUCH_DISTANCE = 150;
 
     private Fragment barFragment = new BarFragment();
     private Fragment circularGaugeFragment = new CircularGaugeFragment();
@@ -25,35 +30,35 @@ public class ChartsActivity extends AppCompatActivity {
 
     }
 
-    //TODO : duplication de code
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        switch (event.getAction() & MotionEvent.ACTION_MASK) {
 
-            case MotionEvent.ACTION_DOWN :
-                nbTouches = 1;
-                start.set(event.getX(), event.getY());
-                break;
-
-            case MotionEvent.ACTION_POINTER_DOWN :
-                nbTouches++;
-                break;
-
-            case MotionEvent.ACTION_MOVE :
-                if (nbTouches >= 3 && (Math.abs(start.y - event.getY()) > 150)) {
+        if (event.getPointerCount() > 1) { // multitouch event
+            if (event.getPointerCount() >= 3) {
+                if ((start.y - event.getY()) < -TOUCH_DISTANCE)
                     finish();
+            }
+        } else { // single touch event
+
+            if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                start.set(event.getX(), event.getY());
+                sortHasBeenTriggered = false;
+            }
+            else if (event.getAction() == MotionEvent.ACTION_MOVE){
+                if (!sortHasBeenTriggered && (start.y - event.getY()) > TOUCH_DISTANCE) { // vers le haut
+                    Toast.makeText(this, "Change sens tri vers le haut", Toast.LENGTH_LONG).show();
+                    sortHasBeenTriggered = true;
                 }
-                break;
-
-            case MotionEvent.ACTION_UP :
-                nbTouches = 0;
-                break;
-
-            case MotionEvent.ACTION_POINTER_UP :
-                nbTouches--;
-                break;
-
+                else if (!sortHasBeenTriggered && (start.y - event.getY()) < -TOUCH_DISTANCE) { // vers le bas
+                    Toast.makeText(this, "Change sens tri vers le bas", Toast.LENGTH_LONG).show();
+                    sortHasBeenTriggered = true;
+                }
+            }
+            else if (event.getAction() == MotionEvent.ACTION_UP){
+                Log.i(TAG, "UP");
+            }
         }
+
         return true;
     }
 
