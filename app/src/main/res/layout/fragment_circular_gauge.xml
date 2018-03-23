@@ -4,10 +4,10 @@
     android:layout_height="match_parent"
     tools:context="zac.vince.jl.patou.popitprof.CircularGaugeFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <com.anychart.anychart.AnyChartView
+        android:id="@+id/any_chart_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="CircularGauge chart" />
+        />
 
 </FrameLayout>

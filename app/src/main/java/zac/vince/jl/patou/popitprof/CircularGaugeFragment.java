@@ -8,8 +8,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.anychart.anychart.AnyChart;
+import com.anychart.anychart.CircularGauge;
+
 
 public class CircularGaugeFragment extends Fragment {
+
+    public CircularGaugeFragment() {
+        CircularGauge circularGauge = AnyChart.circular();
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

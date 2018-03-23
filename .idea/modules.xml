@@ -2,9 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://C:\Users\luc11u\Documents\Code\popit\PopItProf.iml" filepath="C:\Users\luc11u\Documents\Code\popit\PopItProf.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://C:\Users\luc11u\code\popit-prof\popit.iml" filepath="C:\Users\luc11u\code\popit-prof\popit.iml" />
       <module fileurl="file://$PROJECT_DIR$/popit-prof.iml" filepath="$PROJECT_DIR$/popit-prof.iml" />
     </modules>
   </component>
