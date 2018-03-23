@@ -39,7 +39,7 @@ public class Accueil extends AppCompatActivity implements DashboardLauncher {
 
     @Override
     public void popCircularMenu(String surveyName) {
-        ImageView menu = new ImageView(getApplicationContext());
-        Bitmap image = BitmapFactory.decodeFile();
+//        ImageView menu = new ImageView(getApplicationContext());
+//        Bitmap image = BitmapFactory.decodeFile();
     }
 }

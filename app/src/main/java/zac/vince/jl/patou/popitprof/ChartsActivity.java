@@ -1,6 +1,9 @@
 package zac.vince.jl.patou.popitprof;
 
 import android.graphics.PointF;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MotionEvent;
@@ -10,10 +13,16 @@ public class ChartsActivity extends AppCompatActivity {
     private int nbTouches = 0;
     private PointF start = new PointF();
 
+    private Fragment barFragment = new BarFragment();
+    private Fragment circularGaugeFragment = new CircularGaugeFragment();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_charts);
+
+        setCurrentFragment(barFragment);
+
     }
 
     //TODO : duplication de code
@@ -46,6 +55,16 @@ public class ChartsActivity extends AppCompatActivity {
 
         }
         return true;
+    }
+
+    private void setCurrentFragment(Fragment f){
+        FragmentManager m = getSupportFragmentManager();
+        FragmentTransaction ft = m.beginTransaction();
+
+        ft.replace(R.id.contentFragmentView, f);
+        ft.addToBackStack(null);
+
+        ft.commit();
     }
 
 
