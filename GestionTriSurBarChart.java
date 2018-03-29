@@ -1,17 +1,10 @@
-package zac.vince.jl.patou.popitprof;
+package com.anychart.sample.charts;
 
-
-import android.app.Activity;
-import android.graphics.PointF;
 import android.os.Bundle;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Toast;
+import android.widget.Button;
 
 import com.anychart.anychart.AnyChart;
 import com.anychart.anychart.AnyChartView;
@@ -26,33 +19,34 @@ import com.anychart.anychart.Orientation;
 import com.anychart.anychart.ScaleStackMode;
 import com.anychart.anychart.SeriesBar;
 import com.anychart.anychart.Set;
+import com.anychart.anychart.Sort;
 import com.anychart.anychart.TooltipDisplayMode;
 import com.anychart.anychart.TooltipPositionMode;
 import com.anychart.anychart.ValueDataEntry;
-
-import org.json.JSONException;
+import com.anychart.sample.ChartSide;
+import com.anychart.sample.R;
+import com.anychart.sample.SortedDirection;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Map;
-
-import zac.vince.jl.patou.popitprof.enumerations.ChartSide;
-import zac.vince.jl.patou.popitprof.enumerations.SortedDirection;
-import zac.vince.jl.patou.popitprof.util.Util;
 
 
-public class BarFragment extends Fragment {
+/*
+*
+*
+*   Ce code se trouve dans une autre application android, la logique est néanmoins la même. 
+*   cf. présentations
+*
+*/
+
+
+public class BarChartActivity extends AppCompatActivity {
 
     private List<DataEntry> seriesData = new ArrayList<>();
+    private Cartesian barChart;
     private AnyChartView anyChartView;
-
-    //TODO: copy paste from ChartsActiviy
-    private PointF startFinish = new PointF();
-    private PointF startSort = new PointF();
-    private Boolean sortHasBeenTriggered = false;
-    //TODO: make class which implements onTouchListeer and parameter view
 
     public final static String VALUE1_KEY = "value";
     public final static String VALUE2_KEY = "value2";
@@ -60,28 +54,41 @@ public class BarFragment extends Fragment {
     private ChartSide sortedChartSide = null;
     private SortedDirection sortedDirection = null;
 
-    public BarFragment() {
-        // Required empty public constructor
-    }
-
-
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_chart_common);
 
-        View view = inflater.inflate(R.layout.fragment_bar, container, false);
+        final Button leftButton = findViewById(R.id.leftButton);
+        leftButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                // Code here executes on main thread after user presses button
+                //reverseChart();
 
+                boolean wasSorted = sortValues(seriesData, ChartSide.LEFT, SortedDirection.CRESCENT);
 
-        // generate values and chart
+                if (wasSorted)
+                    generateBarChartWithValues(seriesData);
+            }
+        });
+
+        final Button rightButton = findViewById(R.id.rightButton);
+        rightButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                // Code here executes on main thread after user presses button
+                //reverseChart();
+
+                boolean wasSorted = sortValues(seriesData, ChartSide.RIGHT, SortedDirection.DESCENDING);
+
+                if (wasSorted)
+                    generateBarChartWithValues(seriesData);
+            }
+        });
+
+        // generate values
         this.seriesData = generateData();
-        generateBarChartWithValues(this.seriesData, view);
-
-        // Inflate the layout for this fragment
-        return view;
-
+        generateBarChartWithValues(this.seriesData);
     }
-
 
     private List<DataEntry> generateData(){
         List<DataEntry> seriesData = new ArrayList<>();
@@ -111,12 +118,11 @@ public class BarFragment extends Fragment {
         return seriesData;
     }
 
+    private void generateBarChartWithValues(List<DataEntry> seriesData) {
 
-    private void generateBarChartWithValues(List<DataEntry> seriesData, View view) {
+        anyChartView = findViewById(R.id.any_chart_view);
 
-        anyChartView = view.findViewById(R.id.any_chart_view);
-
-        Cartesian barChart = AnyChart.bar();
+        barChart = AnyChart.bar();
 
         barChart.setAnimation(true);
 
@@ -183,6 +189,10 @@ public class BarFragment extends Fragment {
 
     }
 
+    private void reverseChart() {
+        sortValues(this.seriesData, ChartSide.LEFT, SortedDirection.CRESCENT);
+        generateBarChartWithValues(this.seriesData);
+    }
 
     /**
      *
@@ -254,21 +264,6 @@ public class BarFragment extends Fragment {
         CustomDataEntry(String x, Number value, Number value2) {
             super(x, value);
             setValue("value2", value2);
-        }
-
-        public Object getValue(String key) {
-            String json = this.generateJs();
-            try {
-
-                Log.i("AZER", "JSON " + json);
-                Map<String, String> map = Util.jsonToMap(json);
-
-                Log.i("AZER", "Json: "  + json);
-
-                return map.get(key);
-            } catch (JSONException e) {
-                return null;
-            }
         }
     }
 
