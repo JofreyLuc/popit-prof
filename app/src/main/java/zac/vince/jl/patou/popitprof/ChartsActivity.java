@@ -1,11 +1,13 @@
 package zac.vince.jl.patou.popitprof;
 
+import android.content.res.Configuration;
 import android.graphics.PointF;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.widget.Toast;
@@ -57,10 +59,25 @@ public class ChartsActivity extends AppCompatActivity {
                     sortHasBeenTriggered = false;
                 } else if (event.getAction() == MotionEvent.ACTION_MOVE) {
                     if (!sortHasBeenTriggered && (startSort.y - event.getY()) > TOUCH_DISTANCE) { // vers le haut
-                        Toast.makeText(this, "Change sens tri vers le haut", Toast.LENGTH_LONG).show();
+
+                        if (event.getX() < (getWidthOfScreen() / 2)){
+                            Toast.makeText(this, "Gauche Change sens tri vers le haut", Toast.LENGTH_LONG).show();
+                        }
+                        else {
+                            Toast.makeText(this, "Droite change sens tri vers le haut", Toast.LENGTH_LONG).show();
+                        }
+
+
                         sortHasBeenTriggered = true;
                     } else if (!sortHasBeenTriggered && (startSort.y - event.getY()) < -TOUCH_DISTANCE) { // vers le bas
-                        Toast.makeText(this, "Change sens tri vers le bas", Toast.LENGTH_LONG).show();
+
+                        if (event.getX() < (getWidthOfScreen() / 2)){
+                            Toast.makeText(this, "Gauche Change sens tri vers le bas", Toast.LENGTH_LONG).show();
+                        }
+                        else {
+                            Toast.makeText(this, "Droite change sens tri vers le bas", Toast.LENGTH_LONG).show();
+                        }
+
                         sortHasBeenTriggered = true;
                     }
                 } else if (event.getAction() == MotionEvent.ACTION_POINTER_UP) {
@@ -119,5 +136,18 @@ public class ChartsActivity extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
         overridePendingTransition(R.anim.stay, R.anim.slide_out_down);
+    }
+
+    private int getWidthOfScreen(){
+        DisplayMetrics metrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(metrics);
+
+        int height = metrics.heightPixels;
+        int width = metrics.widthPixels;
+        Log.i("AZER", "Height:" +height );
+        Log.i("AZER", "Width:" +width);
+
+        return width;
+
     }
 }
