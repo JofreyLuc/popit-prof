@@ -79,7 +79,7 @@ public class Accueil extends AppCompatActivity implements DashboardLauncher {
     }
 
     @Override
-    public void popCircularMenu(String surveyName) {
+    public void popCircularMenu(String surveyName, float x, float y) {
         ConstraintLayout layout = findViewById(R.id.accueilLayout);
         menu = new ImageView(getApplicationContext());
         menu.setBackgroundResource(R.drawable.menu_sujets_blanc);
