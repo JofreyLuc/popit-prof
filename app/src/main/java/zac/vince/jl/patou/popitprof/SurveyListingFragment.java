@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
+import android.view.GestureDetector;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -53,20 +54,23 @@ public class SurveyListingFragment extends Fragment {
                 switch (event.getAction() & MotionEvent.ACTION_MASK) {
 
                     case MotionEvent.ACTION_DOWN :
+                        Log.i("AZER", "touch down fragment");
                         start.set(event.getX(), event.getY());
                         break;
 
                     case MotionEvent.ACTION_UP :
+                        Log.i("AZER", "touch up fragment");
                         if (circularMenu) {
+                            Log.i("AZER", "check circular menu");
                             if (start.y - event.getY() > 150) {
-                                Log.i("AZER", "remove");
+                                dashboardLauncher.launchSelectedCharts();
                             } else if (start.y - event.getY() < -150) {
-                                Log.i("AZER", "charts");
-                            } else {
-                                
+                                dashboardLauncher.launchSelectedRemove();
                             }
-
+                            dashboardLauncher.hideCircularMenu();
                         }
+                        circularMenu = false;
+
                         break;
 
 
@@ -104,7 +108,6 @@ public class SurveyListingFragment extends Fragment {
                         return true;
                         }
                     });
-
                 grid.addView(b);
             }
         }

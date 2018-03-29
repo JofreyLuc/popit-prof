@@ -51,7 +51,7 @@ public class ChartsActivity extends AppCompatActivity {
                     finish();
             }
 
-            if (event.getPointerCount() == 2) {
+             else if (event.getPointerCount() == 2) {
                 if (event.getAction() == MotionEvent.ACTION_POINTER_2_DOWN) {
                     startSort.set(event.getX(), event.getY());
                     sortHasBeenTriggered = false;

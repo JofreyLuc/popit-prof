@@ -15,6 +15,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewManager;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import zac.vince.jl.patou.popitprof.compatInterfaces.DashboardLauncher;
 import zac.vince.jl.patou.popitprof.persistence.DataStorage;
@@ -24,6 +25,7 @@ public class Accueil extends AppCompatActivity implements DashboardLauncher {
     private SurveysListPagerAdapter mSurveysListPagerAdapter;
     private ViewPager mViewPager;
     private boolean modeMenu = false;
+    private String surveyName;
 
     ImageView menu = null;
 
@@ -49,42 +51,33 @@ public class Accueil extends AppCompatActivity implements DashboardLauncher {
     }
 
     @Override
-    public boolean onTouchEvent(MotionEvent event) {
-        switch (event.getAction() & MotionEvent.ACTION_MASK) {
-
-            case MotionEvent.ACTION_DOWN :
-                start.set(event.getX(), event.getY());
-                break;
-
-            case MotionEvent.ACTION_POINTER_DOWN :
-                break;
-
-            case MotionEvent.ACTION_MOVE :
-                break;
-
-            case MotionEvent.ACTION_UP :
-                if(modeMenu){
-
-                }
-                Log.d("qbf","Coucou");
-                ((ViewManager)menu.getParent()).removeView(menu);
-                this.modeMenu = false;
-                break;
-
-            case MotionEvent.ACTION_POINTER_UP :
-                break;
-
-        }
-        return true;
-    }
-
-    @Override
     public void popCircularMenu(String surveyName, float x, float y) {
+        this.surveyName = surveyName;
         ConstraintLayout layout = findViewById(R.id.accueilLayout);
         menu = new ImageView(getApplicationContext());
         menu.setBackgroundResource(R.drawable.menu_sujets_blanc);
         layout.addView(menu);
 
         this.modeMenu = true;
+    }
+
+    @Override
+    public void hideCircularMenu() {
+        ConstraintLayout layout = findViewById(R.id.accueilLayout);
+        layout.removeView(menu);
+    }
+
+    @Override
+    public void launchSelectedCharts() {
+        Intent i = new Intent(this, ChartsActivity.class);
+        i.putExtra(DashboardActivity.EXTRA_SURVEYNAME, surveyName);
+        startActivity(i);
+        overridePendingTransition(R.anim.slide_in_up, R.anim.stay);
+    }
+
+    @Override
+    public void launchSelectedRemove() {
+        DataStorage.getInstance().removeSurvey(surveyName);
+        Toast.makeText(this, "Questionnaire " + surveyName + " \"supprimé\"", Toast.LENGTH_LONG).show();
     }
 }
