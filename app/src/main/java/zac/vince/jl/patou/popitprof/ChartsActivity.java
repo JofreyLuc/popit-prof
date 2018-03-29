@@ -24,12 +24,12 @@ public class ChartsActivity extends AppCompatActivity {
     private Boolean swiping = false;
 
     private static final String TAG = "AZER";
-    private static final int TOUCH_DISTANCE = 150;
+    public static final int TOUCH_DISTANCE = 150;
 
     private Fragment barFragment = new BarFragment();
     private Fragment circularGaugeFragment = new CircularGaugeFragment();
     private ArrayList<Fragment> fragments = new ArrayList<>();
-    private int currentFragment;
+    private int currentFragment; // 0: barchart | 1: circularGaugeFragment
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
