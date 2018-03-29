@@ -103,11 +103,15 @@ public class SurveyListingFragment extends Fragment {
                 b.setOnLongClickListener(new View.OnLongClickListener() {
                     @Override
                     public boolean onLongClick(View v) {
-                        dashboardLauncher.popCircularMenu(s, v.getX(), v.getY());
+                        if (start != null) {
+                            dashboardLauncher.popCircularMenu(s, start.x, start.y);
+                        } else {
+                            dashboardLauncher.popCircularMenu(s, 0, 0);
+                        }
                         circularMenu = true;
                         return true;
-                        }
-                    });
+                    }
+                });
                 grid.addView(b);
             }
         }
