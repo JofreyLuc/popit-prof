@@ -64,8 +64,8 @@ public class Accueil extends AppCompatActivity implements DashboardLauncher {
         menu = new ImageView(getApplicationContext());
         menu.setBackgroundResource(R.drawable.menu_sujets_blanc);
         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(200,200);
-        params.leftMargin = (int)x;
-        params.topMargin = (int)y;
+        params.leftMargin = (int)x-100;
+        params.topMargin = (int)y-100;
         layout.addView(menu, params);
 
         this.modeMenu = true;
