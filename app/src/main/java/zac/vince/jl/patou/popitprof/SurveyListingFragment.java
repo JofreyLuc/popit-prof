@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -60,13 +61,14 @@ public class SurveyListingFragment extends Fragment {
                         dashboardLauncher.launchDashboard(s);
                     }
                 });
-                b.setOnLongClickListener(new Button.OnLongClickListener() {
+                b.setOnLongClickListener(new View.OnLongClickListener() {
                     @Override
-                    public boolean onLongClick(View view) {
+                    public boolean onLongClick(View v) {
                         dashboardLauncher.popCircularMenu(s);
                         return true;
-                    }
-                });
+                        }
+                    });
+
                 grid.addView(b);
             }
         }
