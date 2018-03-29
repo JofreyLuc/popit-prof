@@ -79,7 +79,8 @@ public class Accueil extends AppCompatActivity implements DashboardLauncher {
     }
 
     @Override
-    public void popCircularMenu(String surveyName) {
+    public void popCircularMenu(String surveyName, float x, float y) {
+
         RelativeLayout layout = findViewById(R.id.menuLayout);
         menu = new ImageView(getApplicationContext());
         menu.setBackgroundResource(R.drawable.menu_sujets_blanc);
