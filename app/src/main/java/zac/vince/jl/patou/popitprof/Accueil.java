@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewManager;
+import android.widget.GridLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
@@ -82,11 +83,12 @@ public class Accueil extends AppCompatActivity implements DashboardLauncher {
     public void popCircularMenu(String surveyName, float x, float y) {
 
         RelativeLayout layout = findViewById(R.id.menuLayout);
+
         menu = new ImageView(getApplicationContext());
         menu.setBackgroundResource(R.drawable.menu_sujets_blanc);
-        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(menu.getWidth(),menu.getHeight());
-        params.leftMargin = 80;
-        params.topMargin = 90;
+        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(200,200);
+        params.leftMargin = (int)x;
+        params.topMargin = (int)y;
         layout.addView(menu, params);
 
         this.modeMenu = true;

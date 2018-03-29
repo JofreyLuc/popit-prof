@@ -5,6 +5,7 @@ package zac.vince.jl.patou.popitprof.compatInterfaces;
  */
 
 public interface DashboardLauncher {
+
     public void launchDashboard(String surveyName);
     public void popCircularMenu(String surveyName, float x, float y);
 }
