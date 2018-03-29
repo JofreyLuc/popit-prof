@@ -15,6 +15,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewManager;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 
 import zac.vince.jl.patou.popitprof.compatInterfaces.DashboardLauncher;
 import zac.vince.jl.patou.popitprof.persistence.DataStorage;
@@ -66,7 +67,6 @@ public class Accueil extends AppCompatActivity implements DashboardLauncher {
                 if(modeMenu){
 
                 }
-                Log.d("qbf","Coucou");
                 ((ViewManager)menu.getParent()).removeView(menu);
                 this.modeMenu = false;
                 break;
@@ -80,10 +80,13 @@ public class Accueil extends AppCompatActivity implements DashboardLauncher {
 
     @Override
     public void popCircularMenu(String surveyName) {
-        ConstraintLayout layout = findViewById(R.id.accueilLayout);
+        RelativeLayout layout = findViewById(R.id.menuLayout);
         menu = new ImageView(getApplicationContext());
         menu.setBackgroundResource(R.drawable.menu_sujets_blanc);
-        layout.addView(menu);
+        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(menu.getWidth(),menu.getHeight());
+        params.leftMargin = 80;
+        params.topMargin = 90;
+        layout.addView(menu, params);
 
         this.modeMenu = true;
     }
