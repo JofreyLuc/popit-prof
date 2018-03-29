@@ -61,7 +61,7 @@ public class DashboardActivity extends AppCompatActivity {
         overridePendingTransition(R.anim.slide_in_up, R.anim.stay);
     }
 
-    //TODO : duplication de code
+
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         switch (event.getAction() & MotionEvent.ACTION_MASK) {

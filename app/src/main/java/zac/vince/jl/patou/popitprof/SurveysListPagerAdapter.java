@@ -48,7 +48,6 @@ public class SurveysListPagerAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public int getCount() {
-        //TODO : global
         return 2;
     }
 

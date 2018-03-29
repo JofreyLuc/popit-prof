@@ -59,6 +59,8 @@ public class Accueil extends AppCompatActivity implements DashboardLauncher {
     @Override
     public void popCircularMenu(String surveyName, float x, float y) {
 
+        this.surveyName = surveyName;
+
         RelativeLayout layout = findViewById(R.id.menuLayout);
 
         menu = new ImageView(getApplicationContext());
@@ -73,7 +75,7 @@ public class Accueil extends AppCompatActivity implements DashboardLauncher {
 
     @Override
     public void hideCircularMenu() {
-        ConstraintLayout layout = findViewById(R.id.accueilLayout);
+        RelativeLayout layout = findViewById(R.id.menuLayout);
         layout.removeView(menu);
     }
 
