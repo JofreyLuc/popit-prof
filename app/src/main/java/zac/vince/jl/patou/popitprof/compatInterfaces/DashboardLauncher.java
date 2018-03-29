@@ -8,4 +8,7 @@ public interface DashboardLauncher {
 
     public void launchDashboard(String surveyName);
     public void popCircularMenu(String surveyName, float x, float y);
+    public void hideCircularMenu();
+    public void launchSelectedCharts();
+    public void launchSelectedRemove();
 }
